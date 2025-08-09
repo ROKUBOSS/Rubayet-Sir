@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lina</title>
+    <link rel="shortcut icon" href="rubayet.jpg" type="image/x-icon">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            text-transform: capitalize;
+            overflow-x: hidden;
+            line-height: 1.6;
+            touch-action: manipulation; /* Improve touch responsiveness */
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            margin: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0) 60%
+            );
+            transform: rotate(30deg);
+            z-index: -1;
+            animation: shine 8s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-10%, -10%); }
+            100% { transform: rotate(30deg) translate(10%, 10%); }
+        }
+
+        .header img {
+            height: 220px;
+            width: 220px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            border: 5px solid #00d2ff;
+            box-shadow: 0 10px 25px rgba(0, 210, 255, 0.4);
+        }
+
+        .header img:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 15px 35px rgba(0, 210, 255, 0.6);
+        }
+
+        .header h4 {
+            font-size: 34px;
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-in-out;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            color: #00d2ff;
+            font-size: 20px;
+            animation: fadeIn 2.5s ease-in-out;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Menu Button */
+        .header button {
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 22px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .header button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 210, 255, 0.6);
+        }
+
+        .header button:hover::before {
+            left: 100%;
+        }
+
+        /* Overlay Navigation */
+        .overlay {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            overflow-x: hidden;
+            transition: 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overlay-content {
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        .overlay h3 {
+            color: #00d2ff;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .overlay a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+            border-radius: 8px;
+            margin: 10px 0;
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .overlay a:hover {
+            background: rgba(0, 210, 255, 0.2);
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.2);
+        }
+
+        /* Close Button - Enhanced for mobile */
+        .closebtn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 50px;
+            color: #fff;
+            transition: 0.3s;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1001; /* Ensure it's above other elements */
+            user-select: none; /* Prevent text selection */
+        }
+
+        .closebtn:hover {
+            transform: rotate(90deg);
+            color: #00d2ff;
+            background: rgba(0, 210, 255, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media only screen and (max-width: 768px) {
+            .header img {
+                height: 180px;
+                width: 180px;
+            }
+
+            .header h4 {
+                font-size: 28px;
+            }
+
+            .header p {
+                font-size: 18px;
+            }
+
+            .header button {
+                font-size: 20px;
+                padding: 12px 20px;
+            }
+
+            .overlay-content {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .overlay a {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            .closebtn {
+                top: 20px;
+                right: 20px;
+                font-size: 40px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .header img {
+                height: 150px;
+                width: 150px;
+            }
+
+            .header h4 {
+                font-size: 24px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .header button {
+                font-size: 18px;
+                padding: 10px 15px;
+            }
+
+            .overlay a {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .closebtn {
+                top: 15px;
+                right: 15px;
+                font-size: 30px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <img src="rubayetsir1.jpg" alt="Profile Picture">
+        <h4>Rubayet-Sir</h4>
+        <!-- <p>DU</p> -->
+    </header>
+
+    <!-- Menu Button -->
+    <div class="header">
+        <button onclick="openNav()">IELTS</button>
+    </div>
+
+    <!-- Overlay Navigation -->
+    <div id="myNav" class="overlay">
+        <span class="closebtn" onclick="closeNav()">&times;</span>
+        <div class="overlay-content">
+            <h3>IELTS</h3>
+            <div style="max-height: 70vh; overflow-y: auto; padding-right: 10px;">
+                <!-- <a href="demo/index.html" target="_blank"><b>Demo Class</b></a> -->
+                <a href="folder1/test.html" target="_blank">Class-1</a>
+                <a href="folder2/index.html" target="_blank">Class-2</a>
+                <a href="folder3/index.html" target="_blank">Class-3</a>
+                <a href="folder4/index.html" target="_blank">Class-4</a>
+                <a href="folder5/index.html" target="_blank">Class-5</a>
+                <a href="folder6/index.html" target="_blank">Class-6</a>
+                <a href="folder7/index.html" target="_blank">Class-7</a>
+                <a href="folder8/index.html" target="_blank">Class-8</a>
+                <a href="folder9/index.html" target="_blank">Class-9</a>
+                <a href="folder10/index.html" target="_blank">Class-10</a>
+                <a href="folder11/index.html" target="_blank">Class-11</a>
+                <a href="folder12/index.html" target="_blank">Class-12</a>
+                <a href="folder13/index.html" target="_blank">Class-13</a>
+                <a href="folder14/index.html" target="_blank">Class-14</a>
+                <a href="folder15/index.html" target="_blank">Class-15</a>
+                <a href="folder16/index.html" target="_blank">Class-16</a>
+                <a href="folder17/index.html" target="_blank">Class-17</a>
+                <a href="folder18/index.html" target="_blank">Class-18</a>
+                <a href="folder19/index.html" target="_blank">Class-19</a>
+                <a href="folder20/index.html" target="_blank">Class-20</a>
+                <a href="folder21/index.html" target="_blank">Class-21</a>
+                <a href="folder22/index.html" target="_blank">Class-22</a>
+                <a href="folder23/index.html" target="_blank">Class-23</a>
+                <a href="folder24/index.html" target="_blank">Class-24</a>
+                <a href="folder25/index.html" target="_blank">Class-25</a>
+                <a href="folder26/index.html" target="_blank">Class-26</a>
+                <a href="folder27/index.html" target="_blank">Class-27</a>
+                <a href="folder28/index.html" target="_blank">Class-28</a>
+                <a href="folder29/index.html" target="_blank">Class-29</a>
+                <a href="folder30/index.html" target="_blank">Class-30</a>
+                <a href="folder31/index.html" target="_blank">Class-31</a>
+                <a href="folder32/index.html" target="_blank">Class-32</a>
+                <a href="folder33/index.html" target="_blank">Class-33</a>
+                <a href="folder34/index.html" target="_blank">Class-34</a>
+                <a href="folder35/index.html" target="_blank">Class-35</a>
+                <a href="folder36/index.html" target="_blank">Class-36</a>
+                <a href="folder37/index.html" target="_blank">Class-37</a>
+                <a href="folder38/index.html" target="_blank">Class-38</a>
+                <a href="folder39/index.html" target="_blank">Class-39</a>
+                <a href="folder40/index.html" target="_blank">Class-40</a>
+                
+            </div>
+          
+            <h2 style="color: #00d2ff; margin-top: 30px;">Book 👇</h2>
+            <a href="" target="_blank">Daily-Life</a>
+        </div>
+    </div>
+
+    <script>
+        // Improved navigation functions with touch support
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+            // Disable body scroll when overlay is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+            // Re-enable body scroll when overlay is closed
+            document.body.style.overflow = 'auto';
+        }
+
+        // Add touch event listeners for better mobile support
+        document.addEventListener('DOMContentLoaded', function() {
+            const closeBtn = document.querySelector('.closebtn');
+            
+            // Add touch event for mobile
+            closeBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault(); // Prevent any default touch behavior
+                closeNav();
+            }, { passive: false });
+            
+            // Also keep the original click event for desktop
+            closeBtn.addEventListener('click', closeNav);
+        });
+
+        // Source code protection
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'a' || e.key === 'f12')) {
+                e.preventDefault();
+            }
+        });
+
+        // Close overlay when clicking outside content (optional)
+        document.getElementById('myNav').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeNav();
+            }
+        });
+    </script>
+</body>
+</html>
